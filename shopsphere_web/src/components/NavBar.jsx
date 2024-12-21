@@ -6,6 +6,8 @@ const navigation = [
   { name: 'Browse', href: '/', current: true },
   { name: 'About', href: 'about', current: false },
   { name: 'Contact', href: 'contact', current: false },
+  { name: 'Sign in', href: 'signin', current: false },
+  { name: 'Sign up', href: 'signup', current: false },
 ]
 
 function classNames(...classes) {

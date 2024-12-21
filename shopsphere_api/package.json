@@ -1,0 +1,14 @@
+{
+  "name": "shopsphere_api",
+  "version": "1.0.0",
+  "description": "back-end for shopsphere web application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brian Caldera",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.47.10"
+  }
+}
