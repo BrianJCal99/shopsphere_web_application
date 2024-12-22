@@ -5,7 +5,7 @@ import "./globals.css";
 import store from "@/app/store/store";
 import { Provider } from "react-redux";
 
-import NavBar from "@/components/NavBar";
+import NavBar from "@/app/components/NavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

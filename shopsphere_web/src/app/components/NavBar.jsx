@@ -5,13 +5,14 @@ import { Bars3Icon, ShoppingCartIcon , XMarkIcon, UserIcon } from '@heroicons/re
 import Link from 'next/link'
 import { signOutUser, resetError } from "@/app/features/user/userSlice";
 import { useDispatch } from 'react-redux'
+import { usePathname } from 'next/navigation';
 
 const navigation = [
-  { name: 'Shop', href: '/', current: true },
-  { name: 'About', href: 'about', current: false },
-  { name: 'Contact', href: 'contact', current: false },
-  { name: 'Sign in', href: 'signin', current: false },
-  { name: 'Sign up', href: 'signup', current: false },
+  { name: 'Shop', href: '/'},
+  { name: 'About', href: '/about'},
+  { name: 'Contact', href: '/contact'},
+  { name: 'Sign in', href: '/signin'},
+  { name: 'Sign up', href: '/signup'},
 ]
 
 function classNames(...classes) {
@@ -19,6 +20,7 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const pathname = usePathname();  // Hook to get the current route
   const dispatch = useDispatch();
 
   const handleSignOut = async () => {
@@ -55,9 +57,9 @@ export default function Example() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={pathname === item.href ? 'page' : undefined}
                     className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                       'rounded-md px-3 py-2 text-sm font-medium',
                     )}
                   >
@@ -128,9 +130,9 @@ export default function Example() {
               key={item.name}
               as="a"
               href={item.href}
-              aria-current={item.current ? 'page' : undefined}
+              aria-current={pathname === item.href ? 'page' : undefined}
               className={classNames(
-                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                 'block rounded-md px-3 py-2 text-base font-medium',
               )}
             >
