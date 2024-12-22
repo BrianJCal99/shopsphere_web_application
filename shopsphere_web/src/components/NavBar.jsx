@@ -1,8 +1,10 @@
 'use client'
 
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Button, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, ShoppingCartIcon , XMarkIcon, UserIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import { signOutUser, resetError } from "@/app/features/user/userSlice";
+import { useDispatch } from 'react-redux'
 
 const navigation = [
   { name: 'Shop', href: '/', current: true },
@@ -17,6 +19,19 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const dispatch = useDispatch();
+
+  const handleSignOut = async () => {
+    try {
+      dispatch(resetError()); // Reset any previous error state
+      dispatch(signOutUser());
+      alert("Successfully signed out!");
+      // Optionally, redirect to the home page or login page after sign-out
+    } catch (err) {
+      console.error("Sign-out error: ", err);
+    }
+  };
+  
   return (
     <Disclosure as="nav" className="fixed w-full bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -93,12 +108,12 @@ export default function Example() {
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link
-                    href="#"
+                  <Button
+                    onClick={handleSignOut}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
                     Sign out
-                  </Link>
+                  </Button>
                 </MenuItem>
               </MenuItems>
             </Menu>
