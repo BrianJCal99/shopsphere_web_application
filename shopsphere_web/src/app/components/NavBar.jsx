@@ -4,15 +4,13 @@ import { Button, Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton
 import { Bars3Icon, ShoppingCartIcon , XMarkIcon, UserIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { signOutUser, resetError } from "@/app/features/user/userSlice";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { usePathname } from 'next/navigation';
 
 const navigation = [
   { name: 'Shop', href: '/'},
   { name: 'About', href: '/about'},
   { name: 'Contact', href: '/contact'},
-  { name: 'Sign in', href: '/signin'},
-  { name: 'Sign up', href: '/signup'},
 ]
 
 function classNames(...classes) {
@@ -20,6 +18,7 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const { user } = useSelector((state) => state.user);  // Access user state from Redux
   const pathname = usePathname();  // Hook to get the current route
   const dispatch = useDispatch();
 
@@ -69,11 +68,12 @@ export default function Example() {
               </div>
             </div>
           </div>
+          {user ? (
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <Link
               type="button"
-              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              href={"cart"}
+              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white"
+              href={"/cart"}
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>
@@ -83,10 +83,10 @@ export default function Example() {
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
               <div>
-                <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                <MenuButton className="relative flex rounded-full text-gray-400 hover:text-white">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
-                  <UserIcon aria-hidden="true" className="size-8 rounded-full text-white"/>
+                  <UserIcon aria-hidden="true" className="size-6"/>
                 </MenuButton>
               </div>
               <MenuItems
@@ -110,16 +110,35 @@ export default function Example() {
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Button
+                  <Link
                     onClick={handleSignOut}
+                    href="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
                     Sign out
-                  </Button>
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>
+
+            <div className="mx-3 text-white">Hi, {user.user_metadata.firstName}</div>
           </div>
+          ) : (
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <Link
+              className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+              href={"/signin"}
+            >
+              Sign In
+            </Link>
+            <Link
+              className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+              href={"/signup"}
+            >
+              Sign Up
+            </Link>
+          </div>
+          )}
         </div>
       </div>
 
