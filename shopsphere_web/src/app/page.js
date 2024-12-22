@@ -1,4 +1,4 @@
-// import ItemsList from "./features/items/ItemsList";
+'use client'
 import ItemsList from "@/app/features/items/ItemsList";
 
 export default function Home() {
