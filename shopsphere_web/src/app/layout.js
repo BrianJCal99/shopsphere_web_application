@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import store from "@/app/store/store";
+import { fetchUser } from "@/app/features/user/userSlice";
+import { fetchItems } from "@/app/features/items/itemsSlice";
 import { Provider } from "react-redux";
 
 import NavBar from "@/app/components/NavBar";
@@ -17,6 +19,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+store.dispatch(fetchItems());
+store.dispatch(fetchUser());
 
 export default function RootLayout({ children }) {
   return (

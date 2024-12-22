@@ -82,6 +82,20 @@ export const signOutUser = createAsyncThunk(
   }
 );
 
+// Async Thunk to fetch the current user session
+export const fetchUser = createAsyncThunk(
+  "user/fetchUser",
+  async (_, { rejectWithValue }) => {
+    const { data, error } = await supabase.auth.getUser();
+
+    if (error) {
+      return rejectWithValue(error.message);
+    }
+    
+    return data.user; // Return user info if a session exists
+  }
+);
+
 // Create the user slice
 const userSlice = createSlice({
   name: "user",
@@ -128,6 +142,18 @@ const userSlice = createSlice({
       .addCase(signOutUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase(fetchUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.payload; // Set the user state if a session exists
+        state.error = null;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload; // Set an error if fetching fails
       });
   },
 });
