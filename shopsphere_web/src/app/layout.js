@@ -2,7 +2,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import store from "./store/store";
+import store from "@/app/store/store";
 import { Provider } from "react-redux";
 
 import NavBar from "@/components/NavBar";

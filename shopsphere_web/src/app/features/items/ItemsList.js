@@ -4,7 +4,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchItems } from "./itemsSlice";
-import Image from "next/image";
 
 export default function ItemsList() {
   const dispatch = useDispatch();
@@ -38,9 +37,9 @@ export default function ItemsList() {
                 <div className="font-bold text-lg mb-2">{item.name}</div>
                 <p className="text-gray-700 text-base">{item.description}</p>
             </div>
-            <div className="m-4 justify-items-center">
+            <div className="px-6 py-4">
                 <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                    Add to cart
+                    ADD TO CART
                 </button>
             </div>
         </div>

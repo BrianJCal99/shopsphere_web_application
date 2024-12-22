@@ -1,4 +1,5 @@
-import ItemsList from "./features/items/ItemsList";
+// import ItemsList from "./features/items/ItemsList";
+import ItemsList from "@/app/features/items/ItemsList";
 
 export default function Home() {
   return (
