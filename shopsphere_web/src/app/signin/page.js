@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { signInUser, resetError } from '@/app/features/user/userSlice';
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,8 @@ export default function SignIn() {
   });
 
   const dispatch = useDispatch();
+  const router = useRouter();
+
   const { status, error } = useSelector((state) => state.user);
 
   const handleChange = (e) => {
@@ -31,7 +34,7 @@ export default function SignIn() {
         })
       );
       alert("Sign-in successful!");
-      // Redirect to a protected page or dashboard
+      router.push('/')// Redirect to a protected page or dashboard
     } catch (err) {
       console.error(err);
     }
