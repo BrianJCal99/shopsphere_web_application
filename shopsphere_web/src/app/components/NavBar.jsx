@@ -19,6 +19,7 @@ function classNames(...classes) {
 
 export default function Example() {
   const { user } = useSelector((state) => state.user);  // Access user state from Redux
+  const { totalQuantity } = useSelector((state) => state.cart);  // Access cart state from Redux
   const pathname = usePathname();  // Hook to get the current route
   const dispatch = useDispatch();
 
@@ -80,6 +81,8 @@ export default function Example() {
               <ShoppingCartIcon  aria-hidden="true" className="size-6" />
             </Link>
 
+            <div className='mx-4 text-gray-400'>{totalQuantity}</div>
+
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
               <div>
@@ -121,7 +124,7 @@ export default function Example() {
               </MenuItems>
             </Menu>
 
-            <div className="mx-3 text-white">Hi, {user.user_metadata.firstName}</div>
+            <div className="mx-3 text-white">Hi, {user?.user_metadata?.firstName}</div>
           </div>
           ) : (
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">

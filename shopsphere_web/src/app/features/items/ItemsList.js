@@ -3,12 +3,13 @@
 
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchItems } from "./itemsSlice";
+import { fetchItems } from "@/app/features/items/itemsSlice";
+import { addItem } from "@/app/features/cart/cartSlice";
 
 export default function ItemsList() {
   const dispatch = useDispatch();
 
-  const { items, status, error } = useSelector((state) => state.items);
+  const { items, totalQuantity, status, error } = useSelector((state) => state.items);
 
   useEffect(() => {
     if (status === "idle") {
@@ -18,6 +19,15 @@ export default function ItemsList() {
 
   if (status === "loading") return <p>Loading items...</p>;
   if (status === "failed") return <p>Error: {error}</p>;
+
+  const handleAddToCart = (item, quantity) => {
+    dispatch(addItem({ 
+      id: item.id, 
+      name: item.name, 
+      price: item.price,
+      quantity: quantity 
+    }));
+  };
 
   return (
     <section>
@@ -38,9 +48,28 @@ export default function ItemsList() {
                 <p className="text-gray-700 text-base">{item.description}</p>
             </div>
             <div className="px-6 py-4">
-                <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                    ADD TO CART
-                </button>
+              <button 
+              onClick={() => handleAddToCart(item, 1)}
+              className="mx-1 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                  ADD TO CART
+              </button>
+            </div>
+            <div className="px-6 py-4">
+              <button 
+              onClick={() => handleAddToCart(item, -1)}
+              className="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                  -
+              </button>
+              <button 
+              onClick={() => handleAddToCart(item, 1)}
+              className="mx-1 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                  REMOVE
+              </button>
+              <button 
+              onClick={() => handleAddToCart(item, 1)}
+              className="bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
+                  +
+              </button>
             </div>
         </div>
         ))}
