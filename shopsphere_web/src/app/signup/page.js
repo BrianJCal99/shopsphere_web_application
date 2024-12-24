@@ -37,8 +37,10 @@ export default function SignUp() {
     }
 
     try {
-      dispatch(resetError());
-      dispatch(
+      dispatch(resetError()); // Reset any previous error state
+
+      // Dispatch the sign-in action and wait for the result
+      const result  = await dispatch(
         signUpUser({
           email: formData.email,
           password: formData.password,
@@ -46,8 +48,12 @@ export default function SignUp() {
           lastName: formData.lastName,
         })
       );
-      alert("Signup successful!");
-      router.push('/')// Redirect to a protected page or dashboard
+      if (result.meta.requestStatus === "fulfilled") {
+        alert("Signup successful!");
+        router.push("/"); // Redirect to the main page
+      } else {
+        alert("Signup un-successful!");
+      }
     } catch (err) {
       console.error(err);
     }
@@ -103,7 +109,9 @@ export default function SignUp() {
           </div>
         </form>
 
-        {error && <p className="mt-4 text-center text-sm text-red-500">{error}</p>}
+        {status === "failed" && error && error !== "Auth session missing!" && (
+          <p className="mt-4 text-center text-sm text-red-500">{error}</p>
+        )}
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Already have an account?{" "}

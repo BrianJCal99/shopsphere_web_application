@@ -5,7 +5,7 @@ import { Bars3Icon, ShoppingCartIcon , XMarkIcon, UserIcon } from '@heroicons/re
 import Link from 'next/link'
 import { signOutUser, resetError } from "@/app/features/user/userSlice";
 import { useDispatch, useSelector } from 'react-redux'
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const navigation = [
@@ -23,6 +23,7 @@ export default function Example() {
   const { totalQuantity } = useSelector((state) => state.cart);  // Access cart state from Redux
   const pathname = usePathname();  // Hook to get the current route
   const dispatch = useDispatch();
+  const router = useRouter();
   const [isClient, setIsClient] = useState(false)
  
   useEffect(() => {
@@ -32,9 +33,13 @@ export default function Example() {
   const handleSignOut = async () => {
     try {
       dispatch(resetError()); // Reset any previous error state
-      dispatch(signOutUser());
-      alert("Successfully signed out!");
-      // Optionally, redirect to the home page or login page after sign-out
+      const result = await dispatch(signOutUser());
+      if (result.meta.requestStatus === "fulfilled") {
+        alert("Signed out successfully!");
+        router.push("/signin"); // Redirect to the main page
+      } else {
+        alert("Could not sign out successfully!");
+      }
     } catch (err) {
       console.error("Sign-out error: ", err);
     }
