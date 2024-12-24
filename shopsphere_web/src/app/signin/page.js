@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { signInUser, resetError } from '@/app/features/user/userSlice';
 import { useRouter } from "next/navigation";
@@ -14,8 +14,12 @@ export default function SignIn() {
 
   const dispatch = useDispatch();
   const router = useRouter();
-
   const { status, error } = useSelector((state) => state.user);
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,6 +43,10 @@ export default function SignIn() {
       console.error(err);
     }
   };
+
+  if (!isClient){
+    return null;
+  }
 
   return (
     <>

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { signOutUser, resetError } from "@/app/features/user/userSlice";
 import { useDispatch, useSelector } from 'react-redux'
 import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 const navigation = [
   { name: 'Shop', href: '/'},
@@ -22,6 +23,11 @@ export default function Example() {
   const { totalQuantity } = useSelector((state) => state.cart);  // Access cart state from Redux
   const pathname = usePathname();  // Hook to get the current route
   const dispatch = useDispatch();
+  const [isClient, setIsClient] = useState(false)
+ 
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const handleSignOut = async () => {
     try {
@@ -34,6 +40,10 @@ export default function Example() {
     }
   };
   
+  if (!isClient){
+    return null;
+  }
+
   return (
     <Disclosure as="nav" className="fixed w-full bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -81,7 +91,8 @@ export default function Example() {
               <ShoppingCartIcon  aria-hidden="true" className="size-6" />
             </Link>
 
-            <div className='mx-4 text-gray-400'>{totalQuantity}</div>
+            <div className="mx-3 text-white">Cart</div>
+            <div className='relative rounded bg-white p-1 text-dark'>{totalQuantity}</div>
 
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
@@ -128,6 +139,19 @@ export default function Example() {
           </div>
           ) : (
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <Link
+              type="button"
+              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white"
+              href={"/cart"}
+            >
+              <span className="absolute -inset-1.5" />
+              <span className="sr-only">View notifications</span>
+              <ShoppingCartIcon  aria-hidden="true" className="size-6" />
+            </Link>
+
+            <div className="mx-3 text-white">Cart</div>
+            <div className='relative rounded bg-white p-1 text-dark'>{totalQuantity}</div>
+            
             <Link
               className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
               href={"/signin"}
