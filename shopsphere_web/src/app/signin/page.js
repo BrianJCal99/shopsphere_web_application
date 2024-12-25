@@ -14,7 +14,7 @@ export default function SignIn() {
 
   const dispatch = useDispatch();
   const router = useRouter();
-  const { status, error } = useSelector((state) => state.user);
+  const { user, status, error } = useSelector((state) => state.user);
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
@@ -28,17 +28,24 @@ export default function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       dispatch(resetError()); // Reset any previous error state
-      dispatch(
+  
+      // Dispatch the sign-in action and wait for the result
+      const result = await dispatch(
         signInUser({
           email: formData.email,
           password: formData.password,
         })
       );
-      alert("Sign-in successful!");
-      router.push('/')// Redirect to a protected page or dashboard
+  
+      if (result.meta.requestStatus === "fulfilled") {
+        alert("Sign in successful!");
+        router.push("/"); // Redirect to the main page
+      } else {
+        alert("Sign in un-successful!");
+      }
     } catch (err) {
       console.error(err);
     }
@@ -116,7 +123,9 @@ export default function SignIn() {
             </div>
           </form>
 
-          {error && <p className="mt-4 text-center text-sm text-red-500">{error}</p>}
+          {status === "failed" && error && error !== "Auth session missing!" && (
+            <p className="mt-4 text-center text-sm text-red-500">{error}</p>
+          )}
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Not a member?{' '}

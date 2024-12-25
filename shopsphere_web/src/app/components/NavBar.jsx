@@ -5,7 +5,7 @@ import { Bars3Icon, ShoppingCartIcon , XMarkIcon, UserIcon } from '@heroicons/re
 import Link from 'next/link'
 import { signOutUser, resetError } from "@/app/features/user/userSlice";
 import { useDispatch, useSelector } from 'react-redux'
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const navigation = [
@@ -23,6 +23,7 @@ export default function Example() {
   const { totalQuantity } = useSelector((state) => state.cart);  // Access cart state from Redux
   const pathname = usePathname();  // Hook to get the current route
   const dispatch = useDispatch();
+  const router = useRouter();
   const [isClient, setIsClient] = useState(false)
  
   useEffect(() => {
@@ -32,9 +33,13 @@ export default function Example() {
   const handleSignOut = async () => {
     try {
       dispatch(resetError()); // Reset any previous error state
-      dispatch(signOutUser());
-      alert("Successfully signed out!");
-      // Optionally, redirect to the home page or login page after sign-out
+      const result = await dispatch(signOutUser());
+      if (result.meta.requestStatus === "fulfilled") {
+        alert("Signed out successfully!");
+        router.push("/signin"); // Redirect to the main page
+      } else {
+        alert("Could not sign out successfully!");
+      }
     } catch (err) {
       console.error("Sign-out error: ", err);
     }
@@ -79,7 +84,6 @@ export default function Example() {
               </div>
             </div>
           </div>
-          {user ? (
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <Link
               type="button"
@@ -90,10 +94,11 @@ export default function Example() {
               <span className="sr-only">View notifications</span>
               <ShoppingCartIcon  aria-hidden="true" className="size-6" />
             </Link>
-
             <div className="mx-3 text-white">Cart</div>
-            <div className='relative rounded bg-white p-1 text-dark'>{totalQuantity}</div>
-
+            <div className='text-white'>{totalQuantity}</div>
+          </div>
+          {user ? (
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
               <div>
@@ -134,24 +139,10 @@ export default function Example() {
                 </MenuItem>
               </MenuItems>
             </Menu>
-
             <div className="mx-3 text-white">Hi, {user?.user_metadata?.firstName}</div>
           </div>
           ) : (
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <Link
-              type="button"
-              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white"
-              href={"/cart"}
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">View notifications</span>
-              <ShoppingCartIcon  aria-hidden="true" className="size-6" />
-            </Link>
-
-            <div className="mx-3 text-white">Cart</div>
-            <div className='relative rounded bg-white p-1 text-dark'>{totalQuantity}</div>
-            
             <Link
               className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
               href={"/signin"}
