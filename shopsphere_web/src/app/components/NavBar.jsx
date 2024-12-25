@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react';
 const navigation = [
   { name: 'Shop', href: '/'},
   { name: 'About', href: '/about'},
-  { name: 'Contact', href: '/contact'},
+  { name: 'Contact', href: '/contact'}
 ]
 
 function classNames(...classes) {
@@ -84,19 +84,6 @@ export default function Example() {
               </div>
             </div>
           </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <Link
-              type="button"
-              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white"
-              href={"/cart"}
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">View notifications</span>
-              <ShoppingCartIcon  aria-hidden="true" className="size-6" />
-            </Link>
-            <div className="mx-3 text-white">Cart</div>
-            <div className='text-white'>{totalQuantity}</div>
-          </div>
           {user ? (
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {/* Profile dropdown */}
@@ -106,6 +93,7 @@ export default function Example() {
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
                   <UserIcon aria-hidden="true" className="size-6"/>
+                  <span>Hi, {user?.user_metadata?.firstName}</span>
                 </MenuButton>
               </div>
               <MenuItems
@@ -114,10 +102,18 @@ export default function Example() {
               >
                 <MenuItem>
                   <Link
+                    href="/cart"
+                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                  >
+                    My Cart ({totalQuantity})
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
-                    Your Profile
+                    My Profile
                   </Link>
                 </MenuItem>
                 <MenuItem>
@@ -139,7 +135,6 @@ export default function Example() {
                 </MenuItem>
               </MenuItems>
             </Menu>
-            <div className="mx-3 text-white">Hi, {user?.user_metadata?.firstName}</div>
           </div>
           ) : (
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
