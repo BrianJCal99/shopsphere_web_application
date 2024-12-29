@@ -41,10 +41,10 @@ export default function SignIn() {
       );
   
       if (result.meta.requestStatus === "fulfilled") {
-        alert("Sign in successful!");
+        // alert("Sign in successful!");
         router.push("/"); // Redirect to the main page
       } else {
-        alert("Sign in un-successful!");
+        // alert("Sign in un-successful!");
       }
     } catch (err) {
       console.error(err);

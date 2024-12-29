@@ -11,7 +11,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action) {
-      const { id, name, price, quantity } = action.payload;
+      const { id, name, price, quantity, image, color, size } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
 
       if (existingItem) {
@@ -25,6 +25,9 @@ const cartSlice = createSlice({
           unitPrice: price, // Store unit price separately
           price: price * quantity, // Total price for the item (unit price * quantity)
           quantity,
+          image,
+          color,
+          size
         });
       }
 

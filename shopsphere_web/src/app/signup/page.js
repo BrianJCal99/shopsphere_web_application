@@ -49,10 +49,10 @@ export default function SignUp() {
         })
       );
       if (result.meta.requestStatus === "fulfilled") {
-        alert("Signup successful!");
+        // alert("Signup successful!");
         router.push("/"); // Redirect to the main page
       } else {
-        alert("Signup un-successful!");
+        // alert("Signup un-successful!");
       }
     } catch (err) {
       console.error(err);

@@ -10,13 +10,28 @@ const initialState = {
 
 // Async thunk to fetch items from Supabase
 export const fetchItems = createAsyncThunk("items/fetchItems", async () => {
-  const { data, error } = await supabase.from("items").select("*");
+  const { data, error } = await supabase.from("products").select("*");
 
   if (error) {
     throw error; // Throw an error to be handled in rejected case
   }
 
   return data; // Return fetched items
+});
+
+// Async thunk to fetch a single item by ID from Supabase
+export const fetchItemById = createAsyncThunk("items/fetchItemById", async (id) => {
+  const { data, error } = await supabase
+    .from("items")
+    .select("*")
+    .eq("id", id)
+    .single(); // Ensures only one record is fetched
+
+  if (error) {
+    throw error; // Throw an error to be handled in the rejected case
+  }
+
+  return data; // Return the fetched item
 });
 
 // Slice definition

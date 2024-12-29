@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "docker desktop start && supabase start && supabase status"
+    "start": "docker desktop start && supabase start && supabase status",
+    "stop": "supabase stop && docker desktop stop"
   },
   "author": "Brian Caldera",
   "license": "MIT",
