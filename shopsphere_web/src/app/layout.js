@@ -4,6 +4,7 @@ import "./globals.css";
 import StoreProvider from "@/app/store/StoreProvider";
 
 import AppNavbar from "@/components/app-navbar";
+import AppFooter from "@/components/app-footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +28,7 @@ export default async function RootLayout({ children }) {
             <main>
               {children}
             </main>
+            <AppFooter />
         </StoreProvider>
       </body>
     </html>

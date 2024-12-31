@@ -147,13 +147,13 @@ const navigation = {
           {
             name: 'New Arrivals',
             href: '/products/kids/new_arrivals',
-            imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
+            imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
             imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
           },
           {
             name: 'Seasonal Collections',
             href: '/products/kids/seasonal_collections',
-            imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-02-image-card-06.jpg',
+            imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
             imageAlt:
               'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
           },
@@ -167,8 +167,6 @@ const navigation = {
               { name: 'Pants', href: '#' },
               { name: 'Sweaters', href: '#' },
               { name: 'T-Shirts', href: '#' },
-              { name: 'Jackets', href: '#' },
-              { name: 'Activewear', href: '#' },
               { name: 'Browse All', href: '/products/kids' },
             ],
           },
@@ -177,11 +175,8 @@ const navigation = {
             name: 'Accessories',
             items: [
               { name: 'Watches', href: '#' },
-              { name: 'Wallets', href: '#' },
               { name: 'Bags', href: '#' },
-              { name: 'Sunglasses', href: '#' },
               { name: 'Hats', href: '#' },
-              { name: 'Belts', href: '#' },
             ],
           },
           {
@@ -491,6 +486,9 @@ export default function AppNavbar() {
       </Dialog>
 
       <header className="relative bg-white">
+        <Link href="/promotions" className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
+          % Hurry up grab these deals before the sale ends %
+        </Link>
         <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
